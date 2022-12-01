@@ -1,0 +1,14 @@
+<resources>
+
+    <string name="app_name">AppDeise_20222</string>
+    <string name="entrar">Entrar</string>
+    <string name="text_cadastro">Criar conta</string>
+    <string name="title_cadastro">Crie sua conta</string>
+    <string name="Deslogar">Deslogar</string>
+    <string name="new_list">Criar nova lista</string>
+    <string name="my_lists">Minhas listas</string>
+    <string name="selectItens">Selecionar itens:</string>
+    <string name="valor_unitario">Preço</string>
+    <string name="content_valor_unitario">Valor Unitário</string>
+
+</resources>

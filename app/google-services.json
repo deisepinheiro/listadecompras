@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "682026467970",
+    "project_id": "appdeise20222-204fd",
+    "storage_bucket": "appdeise20222-204fd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:682026467970:android:5c8d02c57ed7c8fc046a9b",
+        "android_client_info": {
+          "package_name": "com.example.appdeise_20222"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "682026467970-9aogc29j9rgabbir8fhp56hgci84b4ln.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxDpRKTDrjbDArWo-jpKLJ4p5Uy8bj9bA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "682026467970-9aogc29j9rgabbir8fhp56hgci84b4ln.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
