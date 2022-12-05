@@ -3,6 +3,7 @@ package com.example.appdeise_20222;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -85,6 +86,8 @@ public class RegisterActivity extends AppCompatActivity {
                     snackbar.setBackgroundTint(Color.WHITE);
                     snackbar.setTextColor(Color.BLACK);
                     snackbar.show();
+
+
                 }else{
                     String erro;
                     try {

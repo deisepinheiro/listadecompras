@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -35,6 +37,11 @@ public class LoginActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
         IniciarComponentes();
+
+        MyBroadcastReceiver br = new MyBroadcastReceiver();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        filter.addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED);
+        this.registerReceiver(br, filter);
 
         text_registerScreen.setOnClickListener(new View.OnClickListener() {
             @Override

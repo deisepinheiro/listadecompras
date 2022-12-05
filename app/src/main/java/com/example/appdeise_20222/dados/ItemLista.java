@@ -1,5 +1,9 @@
 package com.example.appdeise_20222.dados;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class ItemLista {
 
     private String descricao;
@@ -7,12 +11,30 @@ public class ItemLista {
     private Integer quantidade;
     private Double preco;
     private Double subtotal;
+    @PrimaryKey(autoGenerate = true)
+    public int id;
 
     public ItemLista(String descricao, String categoria) {
         this.descricao = descricao;
         this.categoria = categoria;
         this.quantidade = 1;
         this.preco = 0d; // = 0.0
+    }
+
+    @Override
+    public String toString() {
+        return " descricao='" + descricao + '\'' +
+                ", categoria='" + categoria + '\'' +
+                ", quantidade=" + quantidade +
+                '}';
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Double getSubtotal() {
@@ -65,5 +87,9 @@ public class ItemLista {
 
     public Integer getQuantidade() {
         return this.quantidade;
+    }
+
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
     }
 }

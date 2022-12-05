@@ -1,17 +1,25 @@
 package com.example.appdeise_20222;
 
 import android.content.Context;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
+import com.example.appdeise_20222.dados.AppDatabase;
 import com.example.appdeise_20222.dados.ItemLista;
+import com.example.appdeise_20222.databinding.LineItem0Binding;
 import com.example.appdeise_20222.databinding.LineItemBinding;
 
 import java.util.ArrayList;
@@ -20,16 +28,23 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ListaViewHol
 
     private Context context;
     private ArrayList<ItemLista> itens;
+    private  AppDatabase db;
 
     public ListaAdapter(Context context, ArrayList<ItemLista> itens) {
         this.context = context;
         this.itens = itens;
+
+        this.db =
+                Room.databaseBuilder(context,
+                                AppDatabase.class, "lista_compras")
+                        .allowMainThreadQueries()
+                        .build();
     }
 
     @NonNull
     @Override
     public ListaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.line_item, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.line_item0, parent, false);
         ListaViewHolder viewHolder = new ListaViewHolder(view);
         return viewHolder;
     }
@@ -48,6 +63,7 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ListaViewHol
                 item.addQuantidade();
                 holder.binding.etQt.setText(item.getQuantidade().toString());
                 holder.binding.etSubtotal.setText(item.getSubtotal().toString());
+                db.itemListaDao().update(item);
             }
         });
 
@@ -57,6 +73,21 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ListaViewHol
                 item.diminuiQuantidade();
                 holder.binding.etQt.setText(item.getQuantidade().toString());
                 holder.binding.etSubtotal.setText(item.getSubtotal().toString());
+                db.itemListaDao().update(item);
+            }
+        });
+
+        holder.binding.checkBoxItem.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    holder.binding.tvDescription.setPaintFlags(holder.binding.tvDescription.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    holder.binding.tvDescription.setTypeface(null, Typeface.ITALIC);
+                }else{
+                    holder.binding.tvDescription.setPaintFlags(0);
+                    holder.binding.tvDescription.setTypeface(null, Typeface.NORMAL);
+                }
+
             }
         });
 
@@ -70,6 +101,7 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ListaViewHol
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 try {
                     item.setPreco(Double.parseDouble(s.toString()));
+                    db.itemListaDao().update(item);
                     holder.binding.etSubtotal.setText(item.getSubtotal().toString());
                 }catch (Exception ex){
                     Log.e("ERRO","ERRO");
@@ -81,9 +113,6 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ListaViewHol
 
             }
         });
-
-
-
     }
 
     @Override
@@ -93,11 +122,11 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ListaViewHol
 
     public class ListaViewHolder extends RecyclerView.ViewHolder {
 
-        final LineItemBinding binding;
+        final LineItem0Binding binding;
 
         public ListaViewHolder(@NonNull View itemView) {
             super(itemView);
-            binding = LineItemBinding.bind(itemView);
+            binding = LineItem0Binding.bind(itemView);
         }
     }
 

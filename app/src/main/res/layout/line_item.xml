@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <data>
-        <variable name="item" type="com.example.appdeise_20222.dados.ItemLista"/>
-    </data>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -16,7 +14,7 @@
             android:id="@+id/tv_description"
             android:layout_width="160dp"
             android:layout_height="30dp"
-            android:text="@{item.descricao}"
+            android:text=""
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
@@ -72,7 +70,7 @@
                 android:id="@+id/edt_preco"
                 android:layout_width="match_parent"
                 android:inputType="numberDecimal"
-                android:text="@{item.precoBinding}"
+                android:text=""
                 android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -87,7 +85,7 @@
             android:layout_height="48dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:text="@{item.subtotal.toString()}"
+            android:text=""
             android:ems="10"
             android:inputType="numberDecimal"
             android:textColor="@color/black"
@@ -98,11 +96,12 @@
             android:id="@+id/et_qt"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:text="@{item.quantidade.toString()}"
+            android:text=""
             android:layout_marginTop="8dp"
             android:ems="10"
             android:inputType="number"
             android:textColor="@color/black"
+            android:textAlignment="center"
             app:layout_constraintEnd_toStartOf="@+id/bt_more"
             app:layout_constraintTop_toTopOf="parent" />
 
