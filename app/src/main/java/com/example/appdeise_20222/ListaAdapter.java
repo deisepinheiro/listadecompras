@@ -9,9 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,7 +18,6 @@ import androidx.room.Room;
 import com.example.appdeise_20222.dados.AppDatabase;
 import com.example.appdeise_20222.dados.ItemLista;
 import com.example.appdeise_20222.databinding.LineItem0Binding;
-import com.example.appdeise_20222.databinding.LineItemBinding;
 
 import java.util.ArrayList;
 
@@ -29,15 +26,17 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ListaViewHol
     private Context context;
     private ArrayList<ItemLista> itens;
     private  AppDatabase db;
+    private ReturnTotal returnTotal;
 
-    public ListaAdapter(Context context, ArrayList<ItemLista> itens) {
+    public ListaAdapter(Context context, ArrayList<ItemLista> itens, ReturnTotal returnTotal) {
         this.context = context;
         this.itens = itens;
-
+        this.returnTotal = returnTotal;
         this.db =
                 Room.databaseBuilder(context,
                                 AppDatabase.class, "lista_compras")
                         .allowMainThreadQueries()
+                        .fallbackToDestructiveMigration()
                         .build();
     }
 
@@ -53,6 +52,7 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ListaViewHol
     public void onBindViewHolder(@NonNull ListaViewHolder holder, int position) {
         ItemLista item = itens.get(position);
         holder.binding.setItem(item);
+        holder.binding.etSubtotal.setText(item.getSubtotalFormatado());
         holder.binding.executePendingBindings();
 
 
@@ -62,8 +62,9 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ListaViewHol
             public void onClick(View v) {
                 item.addQuantidade();
                 holder.binding.etQt.setText(item.getQuantidade().toString());
-                holder.binding.etSubtotal.setText(item.getSubtotal().toString());
+                holder.binding.etSubtotal.setText(item.getSubtotalFormatado());
                 db.itemListaDao().update(item);
+                returnTotal.atualiza();
             }
         });
 
@@ -72,8 +73,9 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ListaViewHol
             public void onClick(View v) {
                 item.diminuiQuantidade();
                 holder.binding.etQt.setText(item.getQuantidade().toString());
-                holder.binding.etSubtotal.setText(item.getSubtotal().toString());
+                holder.binding.etSubtotal.setText(item.getSubtotalFormatado());
                 db.itemListaDao().update(item);
+                returnTotal.atualiza();
             }
         });
 
@@ -87,7 +89,19 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ListaViewHol
                     holder.binding.tvDescription.setPaintFlags(0);
                     holder.binding.tvDescription.setTypeface(null, Typeface.NORMAL);
                 }
+                item.setCarrinho(isChecked);
+                returnTotal.atualiza();
 
+            }
+        });
+
+        holder.binding.btDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itens.remove(item);
+                db.itemListaDao().delete(item);
+                notifyDataSetChanged();
+                returnTotal.atualiza();
             }
         });
 
@@ -102,7 +116,8 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ListaViewHol
                 try {
                     item.setPreco(Double.parseDouble(s.toString()));
                     db.itemListaDao().update(item);
-                    holder.binding.etSubtotal.setText(item.getSubtotal().toString());
+                    holder.binding.etSubtotal.setText(item.getSubtotalFormatado());
+                    returnTotal.atualiza();
                 }catch (Exception ex){
                     Log.e("ERRO","ERRO");
                 }

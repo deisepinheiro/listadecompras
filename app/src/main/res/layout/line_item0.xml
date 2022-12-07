@@ -23,6 +23,7 @@
             android:textAlignment="viewStart"
             android:textColor="@color/black"
             android:textStyle="bold"
+            android:textSize="20sp"
             app:layout_constraintEnd_toStartOf="@+id/bt_delete"
             app:layout_constraintStart_toEndOf="@+id/checkBoxItem"
             app:layout_constraintTop_toTopOf="parent"
@@ -97,6 +98,7 @@
             app:layout_constraintEnd_toStartOf="@+id/edm_subtotal"
             app:layout_constraintTop_toBottomOf="@+id/tv_description"
             app:prefixText="R$"
+            app:prefixTextColor="@color/black"
             app:startIconContentDescription="@string/content_valor_unitario"
             app:endIconTint="@color/black"
             app:shapeAppearance="@style/Rounded">
@@ -106,7 +108,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
-                android:text="@{item.precoBinding}"/>
+                android:text="@{item.precoBinding}"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="15sp"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -121,6 +126,7 @@
             app:layout_constraintEnd_toStartOf="@+id/bt_delete"
             app:layout_constraintTop_toBottomOf="@+id/tv_description"
             app:prefixText="R$"
+            app:prefixTextColor="@color/black"
             app:startIconContentDescription="@string/content_subtotal"
             app:endIconTint="@color/black"
             app:shapeAppearance="@style/Rounded">
@@ -129,8 +135,11 @@
                 android:id="@+id/et_subtotal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:enabled="false"
                 android:inputType="numberDecimal"
-                android:text="@{item.subtotal.toString()}"/>
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="15sp"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 

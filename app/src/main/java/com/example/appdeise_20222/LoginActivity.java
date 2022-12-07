@@ -2,6 +2,7 @@ package com.example.appdeise_20222;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -15,6 +16,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.appdeise_20222.databinding.ActivityListaBinding;
+import com.example.appdeise_20222.databinding.ActivityLoginBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -24,26 +27,23 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private TextView text_registerScreen;
-    private EditText edit_email, edit_password;
-    private Button bt_login;
-    private ProgressBar progressbar;
     String[] messages = {"Preencha todos os campos"};
+    ActivityLoginBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
+
 
         getSupportActionBar().hide();
-        IniciarComponentes();
 
         MyBroadcastReceiver br = new MyBroadcastReceiver();
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         filter.addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED);
         this.registerReceiver(br, filter);
 
-        text_registerScreen.setOnClickListener(new View.OnClickListener() {
+        binding.textRegisterScreen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -53,12 +53,12 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        bt_login.setOnClickListener(new View.OnClickListener() {
+        binding.btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                String email = edit_email.getText().toString();
-                String senha = edit_password.getText().toString();
+                String email = binding.editEmail.getText().toString();
+                String senha = binding.editPassword.getText().toString();
 
                 if(email.isEmpty() || senha.isEmpty()){
                     Snackbar snackbar = Snackbar.make(v,messages[0], Snackbar.LENGTH_SHORT);
@@ -73,15 +73,15 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void autenticarUsuario(View view){
-        String email = edit_email.getText().toString();
-        String senha = edit_password.getText().toString();
+        String email = binding.editEmail.getText().toString();
+        String senha = binding.editPassword.getText().toString();
 
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, senha).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
 
                 if(task.isSuccessful()){
-                    progressbar.setVisibility(View.VISIBLE);
+                    binding.progressbar.setVisibility(View.VISIBLE);
 
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -124,11 +124,4 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
-    private void IniciarComponentes(){
-        text_registerScreen = findViewById(R.id.text_registerScreen);
-        edit_email = findViewById(R.id.edit_email);
-        edit_password = findViewById(R.id.edit_password);
-        bt_login = findViewById(R.id.bt_login);
-        progressbar = findViewById(R.id.progressbar);
-    }
 }

@@ -2,6 +2,8 @@ package com.example.appdeise_20222;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.BindingAdapter;
+import androidx.databinding.DataBindingUtil;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.appdeise_20222.databinding.ActivityRegisterBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -30,28 +33,24 @@ import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText edit_name, edit_email, edit_password;
-    private Button bt_register;
-
     String[] mensagens = {"Preencha todos os campos", "Cadastro realizado com sucesso"};
     String usuarioID;
+    ActivityRegisterBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_register);
 
         getSupportActionBar().hide();
 
-        IniciarComponentes();
-
-        bt_register.setOnClickListener(new View.OnClickListener() {
+        binding.btRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                String nome = edit_name.getText().toString();
-                String email = edit_email.getText().toString();
-                String senha = edit_password.getText().toString();
+                String nome = binding.editName.getText().toString();
+                String email = binding.editEmail.getText().toString();
+                String senha = binding.editPass.getText().toString();
 
                 if(nome.isEmpty() || email.isEmpty() || senha.isEmpty()){
                     Snackbar snackbar = Snackbar.make(view,mensagens[0], Snackbar.LENGTH_SHORT);
@@ -70,8 +69,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void CadastrarUsuario(View view){
 
-        String email = edit_email.getText().toString();
-        String senha = edit_password.getText().toString();
+        String email = binding.editEmail.getText().toString();
+        String senha = binding.editPass.getText().toString();
 
         FirebaseApp.initializeApp(this);
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email,senha).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -118,7 +117,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void SalvarDadosUsuario(){
-        String nome = edit_name.getText().toString();
+        String nome = binding.editName.getText().toString();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Map<String, Object> usuarios = new HashMap<>();
@@ -142,10 +141,4 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private void IniciarComponentes(){
-        edit_name = findViewById(R.id.edit_name);
-        edit_email = findViewById(R.id.edit_email);
-        edit_password = findViewById(R.id.edit_pass);
-        bt_register = findViewById(R.id.bt_register);
-    }
 }

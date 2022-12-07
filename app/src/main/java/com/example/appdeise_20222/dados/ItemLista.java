@@ -3,6 +3,8 @@ package com.example.appdeise_20222.dados;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.Locale;
+
 @Entity
 public class ItemLista {
 
@@ -11,6 +13,8 @@ public class ItemLista {
     private Integer quantidade;
     private Double preco;
     private Double subtotal;
+    private Boolean carrinho;
+
     @PrimaryKey(autoGenerate = true)
     public int id;
 
@@ -18,6 +22,7 @@ public class ItemLista {
         this.descricao = descricao;
         this.categoria = categoria;
         this.quantidade = 1;
+        this.carrinho = false;
         this.preco = 0d; // = 0.0
     }
 
@@ -40,6 +45,14 @@ public class ItemLista {
     public Double getSubtotal() {
         return preco * quantidade;
     }
+
+    public String getSubtotalFormatado() {
+        Double valor = preco * quantidade;
+        String valor_formatado =  String.format(Locale.GERMAN, "%,.2f", valor);
+        return valor_formatado;
+    }
+
+
 
     public void setSubtotal(Double subtotal) {
         this.subtotal = subtotal;
@@ -91,5 +104,13 @@ public class ItemLista {
 
     public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
+    }
+
+    public Boolean getCarrinho() {
+        return carrinho;
+    }
+
+    public void setCarrinho(Boolean carrinho) {
+        this.carrinho = carrinho;
     }
 }

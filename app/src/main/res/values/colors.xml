@@ -13,4 +13,7 @@
     <color name="purple">#B263FC</color>
     <color name="pink_light1">#FBA2D5</color>
     <color name="green_light">#B6F2DD</color>
+    <color name="red"> #FF0000</color>
+    <color name="navy">#000080</color>
+    <color name="fucsia">#FF00FF</color>
 </resources>

@@ -11,5 +11,9 @@
     <string name="content_valor_unitario">Valor Unitário</string>
     <string name="subtotal">Subtotal</string>
     <string name="content_subtotal">Subtotal</string>
+    <string name="total_carrinho">Total carrinho (R$)</string>
+    <string name="content_carrinho">Total itens carrinho</string>
+    <string name="total_lista">Total lista (R$)</string>
+    <string name="content_total_lista">Total itens lista</string>
 
 </resources>
