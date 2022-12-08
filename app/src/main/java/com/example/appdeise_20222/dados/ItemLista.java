@@ -1,11 +1,18 @@
 package com.example.appdeise_20222.dados;
 
+import static androidx.room.ForeignKey.CASCADE;
+
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.util.Locale;
 
-@Entity
+@Entity(foreignKeys ={
+        @ForeignKey(onDelete = CASCADE,entity = Lista.class,
+                parentColumns = "id",childColumns = "lista_id")}
+)
 public class ItemLista {
 
     private String descricao;
@@ -14,9 +21,10 @@ public class ItemLista {
     private Double preco;
     private Double subtotal;
     private Boolean carrinho;
+    private long lista_id;
 
     @PrimaryKey(autoGenerate = true)
-    public int id;
+    public long id;
 
     public ItemLista(String descricao, String categoria) {
         this.descricao = descricao;
@@ -24,6 +32,15 @@ public class ItemLista {
         this.quantidade = 1;
         this.carrinho = false;
         this.preco = 0d; // = 0.0
+    }
+    @Ignore
+    public ItemLista(String descricao, String categoria, long lista_id) {
+        this.descricao = descricao;
+        this.categoria = categoria;
+        this.quantidade = 1;
+        this.carrinho = false;
+        this.preco = 0d; // = 0.0
+        this.lista_id = lista_id;
     }
 
     @Override
@@ -34,11 +51,11 @@ public class ItemLista {
                 '}';
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -52,7 +69,13 @@ public class ItemLista {
         return valor_formatado;
     }
 
+    public long getLista_id() {
+        return lista_id;
+    }
 
+    public void setLista_id(long lista_id) {
+        this.lista_id = lista_id;
+    }
 
     public void setSubtotal(Double subtotal) {
         this.subtotal = subtotal;
@@ -112,5 +135,9 @@ public class ItemLista {
 
     public void setCarrinho(Boolean carrinho) {
         this.carrinho = carrinho;
+    }
+
+    public void setListaId(long listaID) {
+        lista_id = listaID;
     }
 }

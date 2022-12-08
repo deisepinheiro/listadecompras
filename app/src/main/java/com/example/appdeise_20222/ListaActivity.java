@@ -13,19 +13,17 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.appdeise_20222.dados.AppDatabase;
 import com.example.appdeise_20222.dados.ItemLista;
-import com.example.appdeise_20222.dados.ItenListaDao;
+import com.example.appdeise_20222.dados.Lista;
+import com.example.appdeise_20222.dados.ListaComItens;
 import com.example.appdeise_20222.dados.Produto;
 import com.example.appdeise_20222.databinding.ActivityListaBinding;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class ListaActivity extends AppCompatActivity implements ReturnTotal {
@@ -33,9 +31,9 @@ public class ListaActivity extends AppCompatActivity implements ReturnTotal {
 
     private RecyclerView recycler;
     private ListaAdapter adapter;
-    private ArrayList<ItemLista> itens = new ArrayList<>();
     private ArrayList<Produto> produtos = new ArrayList<>();
     private AppDatabase db;
+    private ListaComItens minhaLista;
     ActivityListaBinding binding;
 
 
@@ -62,7 +60,20 @@ public class ListaActivity extends AppCompatActivity implements ReturnTotal {
 
         cadastroPrevioDeProdutos();
 
-        itens = (ArrayList<ItemLista>) db.itemListaDao().getAll();
+        Long id_modelo = getIntent().getLongExtra("id_modelo",0l);
+        if (id_modelo>0l){
+            db.listaDao().updateSetStatusFalse();
+            minhaLista = db.listaDao().getListaComItensById(id_modelo);
+
+        }else{
+            List<ListaComItens> listasAtivas = db.listaDao().getListaComItensByStatus(true);
+            if(listasAtivas.isEmpty()){
+                Lista lista = new Lista("",true);
+                db.listaDao().insertLista(lista);
+                listasAtivas = db.listaDao().getListaComItensByStatus(true);
+            }
+            minhaLista = listasAtivas.get(0);
+        }
 
 
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this,   android.R.layout.simple_spinner_item, categorias);
@@ -79,12 +90,12 @@ public class ListaActivity extends AppCompatActivity implements ReturnTotal {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String categoria = binding.spCategory.getSelectedItem().toString();
-                String produto = produtos.get(position).toString();
+                String produto = parent.getItemAtPosition(position).toString();
                 addNaLista(binding.autoCompleteTextView, produto, categoria);
             }
         });
 
-        adapter = new ListaAdapter(this,itens, this);
+        adapter = new ListaAdapter(this, minhaLista, this);
         recycler.setLayoutManager(layoutManager);
         recycler.setItemAnimator(new DefaultItemAnimator());
         recycler.setAdapter(adapter);
@@ -102,13 +113,24 @@ public class ListaActivity extends AppCompatActivity implements ReturnTotal {
             }
         });
 
-
         binding.btShareLista.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                compartilhaLista(getListaInString(itens));
+                compartilhaLista(getListaInString(minhaLista));
             }
         });
+
+        binding.btSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String nome_lista = binding.tvNamelist.getText().toString();
+                minhaLista.lista.setDescricao(nome_lista);
+                db.listaDao().insertListaComItens(minhaLista);
+                Toast.makeText(ListaActivity.this,"Lista "+nome_lista+" salva!",Toast.LENGTH_LONG).show();
+                binding.tvNamelist.setText("");
+            }
+        });
+
     }
 
     private void cadastroPrevioDeProdutos() {
@@ -194,21 +216,20 @@ public class ListaActivity extends AppCompatActivity implements ReturnTotal {
     }
 
     private void addNaLista(AutoCompleteTextView autoCompleteTextView, String produto, String categoria) {
-        ItemLista item = new ItemLista(produto, categoria);
-        itens.add(item);
+        ItemLista item = new ItemLista(produto, categoria, minhaLista.lista.getId());
+        minhaLista.itens.add(item);
         autoCompleteTextView.setText("");
 
-        ItenListaDao itemListaDao = db.itemListaDao();
-        itemListaDao.insertItem(item);
+        db.listaDao().insertItemNaLista(minhaLista.lista,item);
         adapter.notifyDataSetChanged();
         setTotalLista();
     }
 
-    private String getListaInString(ArrayList<ItemLista> itens){
+    private String getListaInString(ListaComItens minhaLista){
 
         StringBuilder texto = new StringBuilder();
-        texto.append("Minha Lista: \n");
-        for(ItemLista item : itens){
+        texto.append("Lista: "+minhaLista.lista.getDescricao() +"\n");
+        for(ItemLista item : minhaLista.itens){
             texto.append(item.toString() + "\n");
         }
 
@@ -231,10 +252,10 @@ public class ListaActivity extends AppCompatActivity implements ReturnTotal {
     private void setTotalLista () {
         Double total = 0d;
         Double total_carrinho = 0d;
-        for (int i = 0; i < itens.size(); i++) {
-            total += itens.get(i).getSubtotal();
-            if(itens.get(i).getCarrinho()){
-                total_carrinho+=itens.get(i).getSubtotal();
+        for (int i = 0; i < minhaLista.itens.size(); i++) {
+            total += minhaLista.itens.get(i).getSubtotal();
+            if(minhaLista.itens.get(i).getCarrinho()){
+                total_carrinho+=minhaLista.itens.get(i).getSubtotal();
             }
         }
 
@@ -244,8 +265,6 @@ public class ListaActivity extends AppCompatActivity implements ReturnTotal {
     private String formataValor(Double valor){
         return String.format(Locale.GERMAN, "%,.2f", valor);
     }
-
-
 
     @Override
     public void atualiza() {

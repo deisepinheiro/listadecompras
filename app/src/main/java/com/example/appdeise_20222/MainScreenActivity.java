@@ -48,7 +48,7 @@ public class MainScreenActivity extends AppCompatActivity {
         binding.btMyLists.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainScreenActivity.this, MyListActivity.class);
+                Intent intent = new Intent(MainScreenActivity.this, ModelosActivity.class);
                 startActivity(intent);
             }
         });

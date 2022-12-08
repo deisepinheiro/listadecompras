@@ -17,20 +17,21 @@ import androidx.room.Room;
 
 import com.example.appdeise_20222.dados.AppDatabase;
 import com.example.appdeise_20222.dados.ItemLista;
+import com.example.appdeise_20222.dados.ListaComItens;
 import com.example.appdeise_20222.databinding.LineItem0Binding;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ListaViewHolder> {
 
     private Context context;
-    private ArrayList<ItemLista> itens;
-    private  AppDatabase db;
+    private ListaComItens minhaLista;
+    private AppDatabase db;
     private ReturnTotal returnTotal;
 
-    public ListaAdapter(Context context, ArrayList<ItemLista> itens, ReturnTotal returnTotal) {
+    public ListaAdapter(Context context, ListaComItens lista, ReturnTotal returnTotal) {
         this.context = context;
-        this.itens = itens;
+        this.minhaLista = lista;
         this.returnTotal = returnTotal;
         this.db =
                 Room.databaseBuilder(context,
@@ -50,7 +51,7 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ListaViewHol
 
     @Override
     public void onBindViewHolder(@NonNull ListaViewHolder holder, int position) {
-        ItemLista item = itens.get(position);
+        ItemLista item = minhaLista.itens.get(position);
         holder.binding.setItem(item);
         holder.binding.etSubtotal.setText(item.getSubtotalFormatado());
         holder.binding.executePendingBindings();
@@ -90,15 +91,17 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ListaViewHol
                     holder.binding.tvDescription.setTypeface(null, Typeface.NORMAL);
                 }
                 item.setCarrinho(isChecked);
+                db.itemListaDao().update(item);
                 returnTotal.atualiza();
 
             }
         });
+        holder.binding.checkBoxItem.setChecked(item.getCarrinho());
 
         holder.binding.btDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                itens.remove(item);
+                minhaLista.itens.remove(item);
                 db.itemListaDao().delete(item);
                 notifyDataSetChanged();
                 returnTotal.atualiza();
@@ -115,7 +118,7 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ListaViewHol
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 try {
                     item.setPreco(Double.parseDouble(s.toString()));
-                    db.itemListaDao().update(item);
+                    db.listaDao().updateItemNaLista(minhaLista.lista, item);
                     holder.binding.etSubtotal.setText(item.getSubtotalFormatado());
                     returnTotal.atualiza();
                 }catch (Exception ex){
@@ -132,7 +135,7 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ListaViewHol
 
     @Override
     public int getItemCount() {
-        return itens.size();
+        return minhaLista.itens.size();
     }
 
     public class ListaViewHolder extends RecyclerView.ViewHolder {

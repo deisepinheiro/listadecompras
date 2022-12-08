@@ -17,8 +17,8 @@ public interface ItenListaDao {
     @Insert
     void insertAllList(List<ItemLista> itens);
 
-    @Insert
-    void insertItem(ItemLista item);
+    //@Insert
+    //void insertItem(ItemLista item);
 
     @Delete
     void delete(ItemLista user);
