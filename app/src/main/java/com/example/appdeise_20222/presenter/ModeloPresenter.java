@@ -13,11 +13,7 @@ public class ModeloPresenter  implements ModeloPresenterContract.presenter {
     private  AppDatabase db;
     public ModeloPresenter(ModeloPresenterContract.view activity) {
         this.activity = activity;
-        db =  Room.databaseBuilder(activity.getActivity(),
-                        AppDatabase.class, "lista_compras")
-                .allowMainThreadQueries()
-                .fallbackToDestructiveMigration()
-                .build();
+        db = AppDatabase.getInstance(activity.getActivity());
     }
 
 
