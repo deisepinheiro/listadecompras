@@ -32,12 +32,7 @@ public class ModeloAdapter extends RecyclerView.Adapter<ModeloAdapter.ModeloView
         this.context = context;
         this.modelos = modelos;
         this.finish = finish;
-        this.db =
-                Room.databaseBuilder(context,
-                                AppDatabase.class, "lista_compras")
-                        .allowMainThreadQueries()
-                        .fallbackToDestructiveMigration()
-                        .build();
+        this.db =AppDatabase.getInstance(context);
     }
 
     @NonNull

@@ -33,12 +33,7 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ListaViewHol
         this.context = context;
         this.minhaLista = lista;
         this.returnTotal = returnTotal;
-        this.db =
-                Room.databaseBuilder(context,
-                                AppDatabase.class, "lista_compras")
-                        .allowMainThreadQueries()
-                        .fallbackToDestructiveMigration()
-                        .build();
+        this.db = AppDatabase.getInstance(context);
     }
 
     @NonNull
