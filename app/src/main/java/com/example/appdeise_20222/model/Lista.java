@@ -1,11 +1,7 @@
-package com.example.appdeise_20222.dados;
-
-import static androidx.room.ForeignKey.CASCADE;
+package com.example.appdeise_20222.model;
 
 import androidx.room.Entity;
-import androidx.room.ForeignKey;
 import androidx.room.Ignore;
-import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;

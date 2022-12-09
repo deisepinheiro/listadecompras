@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <data>  </data>
+    <data>
+        <variable
+            name="user"
+            type="com.example.appdeise_20222.model.User"/>
+    </data>
 <androidx.core.widget.NestedScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,7 +17,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    tools:context=".LoginActivity">
+    tools:context=".view.LoginActivity">
 
    
     <ImageView
@@ -32,6 +36,7 @@
         android:id="@+id/edit_email"
         style="@style/Edit_Text"
         android:hint="Email"
+        android:text="@{user.login}"
         android:drawableRight="@drawable/ic_email"
         android:inputType="textEmailAddress"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,6 +48,7 @@
         android:id="@+id/edit_password"
         style="@style/Edit_Text"
         android:hint="Senha"
+        android:text="@{user.senha}"
         android:drawableRight="@drawable/ic_eye"
         android:inputType="numberPassword"
         app:layout_constraintStart_toStartOf="parent"

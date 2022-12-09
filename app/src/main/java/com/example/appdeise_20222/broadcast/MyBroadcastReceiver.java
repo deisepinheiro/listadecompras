@@ -1,4 +1,4 @@
-package com.example.appdeise_20222;
+package com.example.appdeise_20222.broadcast;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -10,6 +10,9 @@ import android.content.Intent;
 import android.graphics.Color;
 
 import androidx.core.app.NotificationCompat;
+
+import com.example.appdeise_20222.view.LoginActivity;
+import com.example.appdeise_20222.R;
 
 public class MyBroadcastReceiver extends BroadcastReceiver {
     private static final String CHANNEL_ID = "987654";

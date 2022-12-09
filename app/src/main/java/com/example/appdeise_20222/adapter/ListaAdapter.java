@@ -1,4 +1,4 @@
-package com.example.appdeise_20222;
+package com.example.appdeise_20222.adapter;
 
 import android.content.Context;
 import android.graphics.Paint;
@@ -15,12 +15,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
-import com.example.appdeise_20222.dados.AppDatabase;
-import com.example.appdeise_20222.dados.ItemLista;
-import com.example.appdeise_20222.dados.ListaComItens;
+import com.example.appdeise_20222.R;
+import com.example.appdeise_20222.view.ReturnTotal;
+import com.example.appdeise_20222.room.AppDatabase;
+import com.example.appdeise_20222.model.ItemLista;
+import com.example.appdeise_20222.model.ListaComItens;
 import com.example.appdeise_20222.databinding.LineItem0Binding;
-
-import java.util.List;
 
 public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ListaViewHolder> {
 

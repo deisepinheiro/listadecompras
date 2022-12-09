@@ -1,4 +1,4 @@
-package com.example.appdeise_20222;
+package com.example.appdeise_20222.adapter;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -12,10 +12,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
-import com.example.appdeise_20222.dados.AppDatabase;
-import com.example.appdeise_20222.dados.Lista;
-import com.example.appdeise_20222.dados.ListaComItens;
+import com.example.appdeise_20222.R;
 import com.example.appdeise_20222.databinding.ModelItemBinding;
+import com.example.appdeise_20222.room.AppDatabase;
+import com.example.appdeise_20222.model.ListaComItens;
+import com.example.appdeise_20222.view.CallbackFinish;
+import com.example.appdeise_20222.view.ListaActivity;
 
 import java.util.List;
 
@@ -24,10 +26,12 @@ public class ModeloAdapter extends RecyclerView.Adapter<ModeloAdapter.ModeloView
     private Context context;
     private List<ListaComItens> modelos;
     private AppDatabase db;
+    private CallbackFinish finish;
 
-    public ModeloAdapter(Context context, List<ListaComItens> modelos) {
+    public ModeloAdapter(Context context, List<ListaComItens> modelos, CallbackFinish finish) {
         this.context = context;
         this.modelos = modelos;
+        this.finish = finish;
         this.db =
                 Room.databaseBuilder(context,
                                 AppDatabase.class, "lista_compras")
@@ -45,7 +49,6 @@ public class ModeloAdapter extends RecyclerView.Adapter<ModeloAdapter.ModeloView
     }
 
 
-
     @Override
     public void onBindViewHolder(@NonNull ModeloAdapter.ModeloViewHolder holder, int position) {
         ListaComItens minhalista = modelos.get(position);
@@ -57,6 +60,7 @@ public class ModeloAdapter extends RecyclerView.Adapter<ModeloAdapter.ModeloView
                 Intent intent = new Intent(context, ListaActivity.class);
                 intent.putExtra("id_modelo",minhalista.lista.getId());
                 context.startActivity(intent);
+                finish.desempilharActivity();
             }
         });
 

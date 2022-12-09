@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
-        <variable name="modelo" type="com.example.appdeise_20222.dados.ListaComItens"/>
+        <variable name="modelo" type="com.example.appdeise_20222.model.ListaComItens"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,4 +1,4 @@
-package com.example.appdeise_20222.dados;
+package com.example.appdeise_20222.room;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -7,6 +7,10 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Transaction;
 import androidx.room.Update;
+
+import com.example.appdeise_20222.model.ItemLista;
+import com.example.appdeise_20222.model.Lista;
+import com.example.appdeise_20222.model.ListaComItens;
 
 import java.util.ArrayList;
 import java.util.List;

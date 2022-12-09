@@ -1,4 +1,4 @@
-package com.example.appdeise_20222.dados;
+package com.example.appdeise_20222.model;
 
 import androidx.room.Embedded;
 import androidx.room.Relation;

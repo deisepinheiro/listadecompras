@@ -1,4 +1,4 @@
-package com.example.appdeise_20222;
+package com.example.appdeise_20222.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -15,12 +15,14 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
-import com.example.appdeise_20222.dados.AppDatabase;
-import com.example.appdeise_20222.dados.ItemLista;
-import com.example.appdeise_20222.dados.Lista;
-import com.example.appdeise_20222.dados.ListaComItens;
-import com.example.appdeise_20222.dados.Produto;
+import com.example.appdeise_20222.adapter.ListaAdapter;
+import com.example.appdeise_20222.R;
 import com.example.appdeise_20222.databinding.ActivityListaBinding;
+import com.example.appdeise_20222.room.AppDatabase;
+import com.example.appdeise_20222.model.ItemLista;
+import com.example.appdeise_20222.model.Lista;
+import com.example.appdeise_20222.model.ListaComItens;
+import com.example.appdeise_20222.model.Produto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +37,6 @@ public class ListaActivity extends AppCompatActivity implements ReturnTotal {
     private AppDatabase db;
     private ListaComItens minhaLista;
     ActivityListaBinding binding;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

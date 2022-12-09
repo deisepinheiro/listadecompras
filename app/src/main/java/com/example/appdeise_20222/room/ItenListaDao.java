@@ -1,10 +1,12 @@
-package com.example.appdeise_20222.dados;
+package com.example.appdeise_20222.room;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
+
+import com.example.appdeise_20222.model.ItemLista;
 
 import java.util.List;
 
