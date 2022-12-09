@@ -18,12 +18,6 @@ import java.util.List;
 @Dao
 public interface ListaDao {
 
-    @Query("SELECT * FROM Lista")
-    List<Lista> getAll();
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAllList(List<Lista> listas);
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long insertLista(Lista lista);
 
@@ -35,18 +29,18 @@ public interface ListaDao {
 
     @Transaction
     @Query("SELECT * FROM Lista")
-    public List<ListaComItens> getListaComItens();
+    List<ListaComItens> getListaComItens();
 
     @Transaction
     @Query("SELECT * FROM Lista where lista.ativa = :ativo")
-    public List<ListaComItens> getListaComItensByStatus(boolean ativo);
+    List<ListaComItens> getListaComItensByStatus(boolean ativo);
 
     @Transaction
     @Query("SELECT * FROM Lista where lista.ativa = :ativo and lista.descricao LIKE '%' || :search || '%'")
-    public List<ListaComItens> getListaComItensbyStatusAndDescription(boolean ativo, String search);
+    List<ListaComItens> getListaComItensbyStatusAndDescription(boolean ativo, String search);
 
     @Transaction
-    public default void insertListaComItens(ListaComItens minhaLista) {
+    default long insertListaComItens(ListaComItens minhaLista) {
 
         Lista newLista = new Lista(minhaLista.lista.getDescricao(),false);
         final long listaID = insertLista(newLista);
@@ -57,14 +51,15 @@ public interface ListaDao {
             item.setId(0);
             insertItem(item);
         }
+        return listaID;
     }
 
-    public default void insertItemNaLista(Lista lista, ItemLista item) {
+    default void insertItemNaLista(Lista lista, ItemLista item) {
         item.setListaId(lista.getId());
         insertItem(item);
     }
 
-    public default void updateItemNaLista(Lista lista, ItemLista item) {
+    default void updateItemNaLista(Lista lista, ItemLista item) {
         item.setListaId(lista.getId());
         updateItem(item);
     }
@@ -83,7 +78,7 @@ public interface ListaDao {
 
 
     @Transaction
-    public default ListaComItens copiaListaComItens(ListaComItens original) {
+    default ListaComItens copiaListaComItens(ListaComItens original) {
         ListaComItens listaComItens = new ListaComItens();
         Lista newLista = new Lista(original.lista.getDescricao(),true);
         listaComItens.lista = newLista;
