@@ -9,6 +9,7 @@ import com.example.appdeise_20222.view.ListaActivity;
 import com.example.appdeise_20222.view.LoginActivity;
 import com.example.appdeise_20222.view.ModelosActivity;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 

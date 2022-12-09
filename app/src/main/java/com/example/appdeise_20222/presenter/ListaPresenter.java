@@ -57,7 +57,7 @@ public class ListaPresenter implements ListaPresenterContract.presenter{
 
     @Override
     public void setDadosListaCategoria() {
-        String categorias[] = {"TODAS", "Padaria","Carnes", "Congelados", "Mercearia","Matinais","Frios e Laticínios", "Enlatados", "Limpeza", "Higiene",
+        String categorias[] = {"","TODAS", "Padaria","Carnes", "Congelados", "Mercearia","Matinais","Frios e Laticínios", "Enlatados", "Limpeza", "Higiene",
                 "Bebidas", "Hortifruti", "Utilidades Domésticas","Pet Shop"};
         activity.setSpinnerCategoria(categorias);
     }

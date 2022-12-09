@@ -51,7 +51,7 @@ public class RegisterPresenter implements RegisterPresenterContract.presenter{
 
                 if (task.isSuccessful()){
 
-                    salvarDadosUsuario(user.getLogin());
+                    salvarDadosUsuario(user.getNome());
                     activity.showSnakeBar("Cadastro realizado com sucesso");
                     new Handler().postDelayed(() -> activity.getActivity().finish(), 1500);
 

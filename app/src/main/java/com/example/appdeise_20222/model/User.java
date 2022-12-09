@@ -5,8 +5,8 @@ public class User {
     private String senha;
     private String nome;
 
-    public User(String nome, String login, String senha) {
-        this.login = login;
+    public User(String email, String senha, String nome) {
+        this.login = email;
         this.senha = senha;
         this.nome = nome;
     }

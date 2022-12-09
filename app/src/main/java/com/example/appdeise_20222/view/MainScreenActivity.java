@@ -24,8 +24,6 @@ public class MainScreenActivity extends AppCompatActivity implements MainPresent
 
         this.presenter = new MainPresenter(this);
 
-        presenter.registerReceiver();
-
         binding.btNewList.setOnClickListener(v -> presenter.startListaActivity());
 
         binding.btMyLists.setOnClickListener(v -> presenter.startModelosActivity());
@@ -40,11 +38,10 @@ public class MainScreenActivity extends AppCompatActivity implements MainPresent
 
     }
     @Override
-    public void setViews(String email, String login) {
+    public void setViews(String nome, String email) {
         binding.textUserEmail.setText(email);
-        binding.textUserName.setText(login);
+        binding.textUserName.setText(nome);
     }
-
 
     @Override
     public Activity getActivity() {

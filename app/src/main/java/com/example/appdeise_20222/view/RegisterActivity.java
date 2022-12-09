@@ -57,11 +57,11 @@ public class RegisterActivity extends AppCompatActivity implements RegisterPrese
 
             presenter.tryLogin(
                     new User(
-                    binding.editName.getText().toString(),
-                    binding.editEmail.getText().toString(),
-                    binding.editPass.getText().toString())
+                        binding.editEmail.getText().toString(),
+                        binding.editPass.getText().toString(),
+                        binding.editName.getText().toString()
+                    )
             );
-
         });
 
     }

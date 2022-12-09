@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity implements LoginPresenterCo
         binding.textRegisterScreen.setOnClickListener(v -> presenter.startRegisterActivity());
 
         binding.btLogin.setOnClickListener(
-                v -> presenter.checkLogin(new User(binding.editEmail.getText().toString(), binding.editPassword.getText().toString(), binding.editPassword.getText().toString()))
+                v -> presenter.checkLogin(new User(binding.editEmail.getText().toString(), binding.editPassword.getText().toString()))
         );
 
     }
