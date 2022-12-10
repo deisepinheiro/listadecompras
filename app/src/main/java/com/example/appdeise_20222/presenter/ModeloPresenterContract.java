@@ -15,7 +15,6 @@ public class ModeloPresenterContract {
 
     }
     public interface presenter {
-        void startListaActivity();
         void setDataInRecicleView();
         void getListaComItens(boolean b, String toString);
     }

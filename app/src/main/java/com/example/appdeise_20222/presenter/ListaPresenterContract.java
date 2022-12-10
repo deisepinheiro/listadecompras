@@ -25,7 +25,7 @@ public class ListaPresenterContract {
         long getListaDeComprasbyId(long id_modelo);
         long getListaDeComprasAtual();
         void setDadosListaCategoria();
-        void setDadpsAutoCompleteProduto();
+        void setDadosAutoCompleteProduto();
         void addItemNaLista(ItemLista item);
         void compartilhaLista();
         void calculaTotaisDaLista();

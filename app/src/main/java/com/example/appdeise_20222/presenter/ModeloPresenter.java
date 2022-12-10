@@ -1,6 +1,6 @@
 package com.example.appdeise_20222.presenter;
 
-import androidx.room.Room;
+
 
 import com.example.appdeise_20222.model.ListaComItens;
 import com.example.appdeise_20222.room.AppDatabase;
@@ -14,12 +14,6 @@ public class ModeloPresenter  implements ModeloPresenterContract.presenter {
     public ModeloPresenter(ModeloPresenterContract.view activity) {
         this.activity = activity;
         db = AppDatabase.getInstance(activity.getActivity());
-    }
-
-
-    @Override
-    public void startListaActivity() {
-
     }
 
     @Override

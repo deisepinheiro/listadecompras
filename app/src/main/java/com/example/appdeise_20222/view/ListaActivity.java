@@ -7,10 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
@@ -46,7 +43,7 @@ public class ListaActivity extends AppCompatActivity implements ReturnTotal, Lis
 
         presenter.cadastroPrevioDeProdutos();
         presenter.setDadosListaCategoria();
-        presenter.setDadpsAutoCompleteProduto();
+        presenter.setDadosAutoCompleteProduto();
 
         Long id_modelo = getIntent().getLongExtra("id_modelo",0l);
         if (id_modelo>0l){
@@ -68,7 +65,7 @@ public class ListaActivity extends AppCompatActivity implements ReturnTotal, Lis
             String categoria = binding.spCategory.getSelectedItem().toString();
             ItemLista item = new ItemLista(produto, categoria,IdMinhaLista);
             presenter.addItemNaLista(item);
-            presenter.setDadpsAutoCompleteProduto();
+            presenter.setDadosAutoCompleteProduto();
         });
 
         binding.btShareLista.setOnClickListener(v -> presenter.compartilhaLista());

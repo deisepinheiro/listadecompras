@@ -10,7 +10,6 @@ public class MainPresenterContract {
     }
 
     public interface presenter {
-        void registerReceiver();
         void startListaActivity();
         void startModelosActivity();
         void logoff();

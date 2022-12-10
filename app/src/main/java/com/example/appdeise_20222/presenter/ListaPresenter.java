@@ -63,7 +63,7 @@ public class ListaPresenter implements ListaPresenterContract.presenter{
     }
 
     @Override
-    public void setDadpsAutoCompleteProduto() {
+    public void setDadosAutoCompleteProduto() {
         List<Produto> produtos = AppDatabase.getInstance(activity.getActivity()).produtoDao().getAll();
         activity.setAutoCompleteProdutos(produtos);
     }

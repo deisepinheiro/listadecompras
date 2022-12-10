@@ -1,8 +1,6 @@
 package com.example.appdeise_20222.presenter;
 
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.ConnectivityManager;
 
 import com.example.appdeise_20222.broadcast.MyBroadcastReceiver;
 import com.example.appdeise_20222.view.ListaActivity;
@@ -19,14 +17,6 @@ public class MainPresenter implements MainPresenterContract.presenter{
 
     public MainPresenter(MainPresenterContract.view activity) {
         this.activity = activity;
-    }
-
-    @Override
-    public void registerReceiver() {
-        MyBroadcastReceiver br = new MyBroadcastReceiver();
-        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-        filter.addAction(Intent.ACTION_PASTE);
-        activity.getActivity().registerReceiver(br, filter);
     }
 
     @Override
